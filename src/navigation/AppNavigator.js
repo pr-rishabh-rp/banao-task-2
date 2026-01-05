@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 import HomeDrawer from './HomeDrawer'; // Import the drawer we just made
 import ProfileScreen from '../screens/ProfileScreen';
@@ -14,7 +15,28 @@ const Tab = createBottomTabNavigator();
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: true }}> 
+      <Tab.Navigator 
+        screenOptions={({ route }) => ({
+          headerShown: true,
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = focused ? 'home' : 'home-outline';
+            } else if (route.name === 'Profile') {
+              iconName = focused ? 'person' : 'person-outline';
+            } else if (route.name === 'Settings') {
+              iconName = focused ? 'settings' : 'settings-outline';
+            } else if (route.name === 'Gallery') {
+              iconName = focused ? 'images' : 'images-outline';
+            }
+
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: 'turquoise',
+          tabBarInactiveTintColor: 'gray',
+        })}
+      > 
 
         <Tab.Screen 
           name="Home" 
